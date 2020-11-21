@@ -1,4 +1,3 @@
-import { ChangeDetectionStrategy } from "@angular/compiler/src/core";
 import { Component, OnInit } from "@angular/core";
 import { Ingredient } from "../shared/ingredient.model";
 
@@ -8,7 +7,7 @@ import { Ingredient } from "../shared/ingredient.model";
   styleUrls: ["./shopping-list.component.css"],
 })
 export class ShoppingListComponent implements OnInit {
-  ingredients: Ingredient[] = [
+  public ingredients: Ingredient[] = [
     new Ingredient("Apples", 5),
     new Ingredient("Tomatoes", 10),
   ];
@@ -17,7 +16,7 @@ export class ShoppingListComponent implements OnInit {
 
   ngOnInit() {}
 
-  onIngredientAdded(ingredient: Ingredient) {
-    this.ingredients = [...this.ingredients, ingredient];
+  onIngredientAdded(ingredient: Ingredient): void {
+    this.ingredients.push(ingredient);
   }
 }
