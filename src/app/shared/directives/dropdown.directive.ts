@@ -14,11 +14,6 @@ export class DropDownDirective {
 
   constructor(private elRef: ElementRef) {}
 
-  // @HostListener("click")
-  // public show() {
-  //   this.open = !this.open;
-  // }
-
   @HostListener("document:click", ["$event"])
   public clickOut(event: Event): void {
     this.open = this.elRef.nativeElement.contains(event.target) as boolean;

@@ -11,8 +11,7 @@ export interface DisplayHandler {
   templateUrl: "header.component.html",
 })
 export class HeaderComponent {
-  @Output()
-  tabHandler = new EventEmitter<string>();
+  @Output() tabHandler = new EventEmitter<string>();
 
   onSelect(term: string) {
     this.tabHandler.emit(term);
