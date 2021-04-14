@@ -1,4 +1,3 @@
-import { EventEmitter, Output } from "@angular/core";
 import { Component } from "@angular/core";
 
 export interface DisplayHandler {
@@ -9,11 +8,6 @@ export interface DisplayHandler {
 @Component({
   selector: "app-header",
   templateUrl: "header.component.html",
+  styleUrls: ["header.component.scss"],
 })
-export class HeaderComponent {
-  @Output() tabHandler = new EventEmitter<string>();
-
-  onSelect(term: string) {
-    this.tabHandler.emit(term);
-  }
-}
+export class HeaderComponent {}
