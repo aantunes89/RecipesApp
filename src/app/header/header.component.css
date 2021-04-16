@@ -1,0 +1,9 @@
+a {
+  cursor: pointer;
+}
+
+.active-route {
+  font-weight: 500;
+  color: #777 !important;
+  background-color: #9d9d9d47 !important;
+}
