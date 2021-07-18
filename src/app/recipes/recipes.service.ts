@@ -1,44 +1,55 @@
-import { EventEmitter, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 import { Ingredient } from "../shared/model/ingredient.model";
 import { ShoppingListService } from "../shopping-list/shopping-list.service";
 import { Recipe } from "./recipe.model";
 
 @Injectable({ providedIn: "root" })
 export class RecipesService {
-  public recipeSelected = new EventEmitter<Recipe>();
   public selectedRecipe: Recipe;
 
-  private recipes: Recipe[] = [
-    new Recipe(
-      "Tasty Schnitzel",
-      "A super tasty Schnitzel",
-      "https://upload.wikimedia.org/wikipedia/commons/7/72/Schnitzel.JPG",
-      [new Ingredient("Meat", 1), new Ingredient("French Fries", 20)]
-    ),
-    new Recipe(
-      "Big Fat Burguer",
-      "What else you need to say",
-      "https://upload.wikimedia.org/wikipedia/commons/b/be/Burger_King_Angus_Bacon_%26_Cheese_Steak_Burger.jpg",
-      [new Ingredient("Buns", 2), new Ingredient("Meat", 1)]
-    ),
-  ];
+  private recipes = [];
 
-  constructor(private shoppingListService: ShoppingListService) {}
+  recipesChanged = new BehaviorSubject<Recipe[]>(this.recipes);
 
-  getRecipes() {
-    const recipesCopy = [...this.recipes];
-    return recipesCopy;
+  recipesChanged$ = this.recipesChanged.asObservable();
+
+  constructor(private shoppingListService: ShoppingListService) { }
+
+  public getRecipes() {
+    return [...this.recipes];
   }
 
-  onSelectRecipe(recipe: Recipe) {
+  public onSelectRecipe(recipe: Recipe): void {
     this.selectedRecipe = recipe;
   }
 
-  public getRecipesById(id: number) {
+  public getRecipesById(id: number): Recipe {
     return this.recipes[id];
   }
 
-  addIngredientsToShoppingList(ingredients: Ingredient[]) {
+  public addIngredientsToShoppingList(ingredients: Ingredient[]): void {
     this.shoppingListService.addMultipleIngredients(ingredients);
   }
+
+  public addRecipe(recipe: Recipe): void {
+    this.recipes = [...this.recipes, recipe];
+    this.recipesChanged.next(this.recipes);
+  }
+
+  public updateRecipe(id: number, newRecipe: Recipe): void {
+    this.recipes[id] = newRecipe;
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  public deleteRecipe(index: number): void {
+    this.recipes.splice(index, 1);
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  public setRecipes(recipes: Recipe[]): void {
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
+  }
 }
+
