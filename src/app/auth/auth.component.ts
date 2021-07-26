@@ -49,7 +49,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    if (this.subscriptions.length)
+      this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   public onSwitchMode(): void {
@@ -101,9 +102,21 @@ export class AuthComponent implements OnInit, OnDestroy {
     const alertComponentFactory =
       this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
 
+    this.alertHost;
+
     const hostViewCointainerRef = this.alertHost.viewConteinerRef;
+
     hostViewCointainerRef.clear();
 
-    hostViewCointainerRef.createComponent(alertComponentFactory);
+    const componentRef = hostViewCointainerRef.createComponent(
+      alertComponentFactory
+    );
+
+    componentRef.instance.message = message;
+
+    const alertErrorSub = componentRef.instance.close.subscribe(() => {
+      alertErrorSub.unsubscribe();
+      hostViewCointainerRef.clear();
+    });
   }
 }
