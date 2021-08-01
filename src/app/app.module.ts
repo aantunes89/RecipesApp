@@ -3,29 +3,19 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
+import { SharedModule } from "./shared/shared.module";
+
 import { RecipesModule } from "./recipes/recipes.module";
 import { ShoppingListModule } from "./shopping-list/shopping-list.module";
 
 import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./header/header.component";
-import { DropDownDirective } from "./shared/directives/dropdown.directive";
 import { AppRoutingModule } from "./app-routing.module";
 import { AuthComponent } from "./auth/auth.component";
-import { LoadingSpinnerComponent } from "./shared/components/loading-spinner/loading-spinner.component";
 import { AuthInterceptor } from "./auth/auth-interceptor.service";
-import { AlertComponent } from "./shared/components/alert/alert.component";
-import { PlaceholderDirective } from "./shared/directives/placeholder.directive";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AuthComponent,
-    HeaderComponent,
-    PlaceholderDirective,
-    DropDownDirective,
-    LoadingSpinnerComponent,
-    AlertComponent,
-  ],
+  declarations: [AppComponent, AuthComponent, HeaderComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -34,6 +24,7 @@ import { PlaceholderDirective } from "./shared/directives/placeholder.directive"
     AppRoutingModule,
     RecipesModule,
     ShoppingListModule,
+    SharedModule,
   ],
   providers: [
     {
@@ -43,6 +34,5 @@ import { PlaceholderDirective } from "./shared/directives/placeholder.directive"
     },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [AlertComponent],
 })
 export class AppModule {}
