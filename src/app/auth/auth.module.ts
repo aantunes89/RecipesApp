@@ -5,7 +5,7 @@ import { Route, RouterModule } from "@angular/router";
 import { SharedModule } from "../shared/shared.module";
 import { AuthComponent } from "./auth.component";
 
-const routes: Route[] = [{ path: "auth", component: AuthComponent }];
+const routes: Route[] = [{ path: "", component: AuthComponent }];
 
 @NgModule({
   declarations: [AuthComponent],
